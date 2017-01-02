@@ -12,10 +12,10 @@ public class P006ZigZagTest {
 
     @Test
     public void testCase() {
-        test("abc", 2, "abc");
-        test("abcd", 2, "adbc");
+        test("abc", 2, "acb");
+        test("abcd", 2, "acbd");
         test("abcd", 3, "abdc");
-        test("abcde", 4, "abecd");
+        test("abcde", 4, "abced");
         test("PAYPALISHIRING", 3, "PAHNAPLSIIGYIR");
     }
 

@@ -5,21 +5,28 @@ package net.lliira.leetcode;
  */
 public class P006ZigZag {
     public String convert(String s, int numRows) {
-        if (numRows == 1 || s.length() < 4) return s;
-        final int step = (numRows == 2) ? 3 : numRows * 2 - 2;
-        final int offset = s.length() / step;
-        final int r = numRows - 1;
-        final char[] result = new char[s.length()];
-        for (int t = 0; t < step; t++) {
-            final int p = (t == 0 || numRows == 2) ? t : ((t-1) / r + 2 * ((t-1) % r) + 1);
-            int idx = p * offset;
-            for (int i = 0; i < s.length(); i += step) {
-                final int src = i + t;
-                if (src < s.length()) {
-                    result[idx++] = s.charAt(src);
-                }
+        final int len = s.length();
+        if (numRows == 1 || len < 3) return s;
+
+        final StringBuilder[] sbs = new StringBuilder[numRows];
+        for (int idx = 0; idx < numRows; idx++) {
+            sbs[idx] = new StringBuilder();
+        }
+        int i = 0;
+        while (i < len) {
+            // vertical down
+            for (int idx = 0; idx < numRows && i < len; idx++) {
+                sbs[idx].append(s.charAt(i++));
+            }
+            // obliquelly up
+            for (int idx = numRows - 2; idx >= 1 && i < len; idx--) {
+                sbs[idx].append(s.charAt(i++));
             }
         }
-        return new String(result);
+        for (int idx = 1; idx < numRows; idx++) {
+            sbs[0].append(sbs[idx]);
+        }
+
+        return sbs[0].toString();
     }
 }
