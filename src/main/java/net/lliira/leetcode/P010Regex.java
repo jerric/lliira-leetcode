@@ -9,121 +9,57 @@ import java.util.*;
  */
 public class P010Regex {
 
+    private static class Rule {
+        private final char p;
+        private final int index;
+        private boolean single = true;
 
-    public boolean isMatch(String s, String p) {
-        final RuleFactory ruleFactory = new RuleFactory(p);
-        final List<Rule> rules = new ArrayList<>(), nextRules = new ArrayList<>();
-        rules.add(ruleFactory.firstRule());
-        for (int i = 0; i < s.length(); i++) {
-            final char c = s.charAt(i);
-            boolean hasMatch = false;
-            for (final Rule rule : rules) {
-                if (rule.isMatch(c)) {
-                    hasMatch = true;
-                    nextRules.addAll(rule.nextRules());
-                }
-            }
-            if (!hasMatch) return false;
-        }
-    }
-
-}
-
-interface Rule {
-
-    List<Rule> nextRules();
-
-    boolean isMatch(final char c);
-}
-
-class RuleFactory {
-
-    private static abstract class AbstractRule implements Rule{
-
-        final RuleFactory ruleFactory;
-        final int index;
-
-        AbstractRule(final RuleFactory ruleFactory, final int index) {
-            this.ruleFactory = ruleFactory;
+        private Rule(final char p, final int index) {
+            this.p = p;
             this.index = index;
         }
     }
 
-    static class CharRule extends AbstractRule {
+    public boolean isMatch(String s, String p) {
+        if (p == null || p.isEmpty() || s == null || s.isEmpty()) return false;
 
-        private final char c;
-
-        CharRule(final RuleFactory ruleFactory, final int index) {
-            super(ruleFactory, index);
-            this.c = ruleFactory.pattern.charAt(index);
+        final Rule[] rules = new Rule[p.length()];
+        final int rulesLength = parse(p, rules);
+        if (rulesLength == 0) return false;
+        Set<Rule> currentRules = new HashSet<>(), nextRules = new HashSet<>();
+        currentRules.add(rules[0]);
+        for (int i = 0; i < s.length() - 1; i++) {
+            final char c = s.charAt(i);
+            for (final Rule rule : currentRules) {
+                if (!rule.single || c == rule.p || '.' == rule.p) {
+                    if (rule.index < rulesLength - 1) nextRules.add(rules[rule.index + 1]);
+                    if (!rule.single) nextRules.add(rule);
+                }
+            }
+            if (nextRules.isEmpty()) return false;
+            currentRules = nextRules;
+            nextRules = new HashSet<>();
         }
 
-        @Override
-        public List<Rule> nextRules() {
-            final Optional<Rule> nextRule = this.ruleFactory.newRule(index + 1);
-            return nextRule.isPresent() ? Collections.singletonList(nextRule.get()) : Collections.emptyList();
+        // match the last char
+        final char c = s.charAt(s.length() - 1);
+        for (final Rule rule : currentRules) {
+            if (rule.index == rulesLength - 1 && (rule.p == c || rule.p == '.')) return true;
         }
-
-        @Override
-        public boolean isMatch(final char c) {
-            return c == this.c;
-        }
+        return false;
     }
 
-    static class StarRule extends AbstractRule {
-
-        StarRule(final RuleFactory ruleFactory, final int index) {
-            super(ruleFactory, index);
+    private int parse(final String pattern, final Rule[] rules) {
+        int ruleLength = 0;
+        for (int i = 0; i < pattern.length(); i++) {
+            final char c = pattern.charAt(i);
+            if (c == '*' && ruleLength > 0) rules[ruleLength - 1].single = false;
+            else {
+                rules[ruleLength] = new Rule(c, ruleLength);
+                ruleLength++;
+            }
         }
-
-        @Override
-        public List<Rule> nextRules() {
-            final Optional<Rule> nextRule = this.ruleFactory.newRule(index + 1);
-            return nextRule.isPresent() ? Collections.singletonList(nextRule.get()) : Collections.emptyList();
-        }
-
-        @Override
-        public boolean isMatch(final char c) {
-            return true;
-        }
+        return ruleLength;
     }
 
-    static class DotRule extends AbstractRule {
-
-        DotRule(final RuleFactory ruleFactory, final int index) {
-            super(ruleFactory, index);
-        }
-
-        @Override
-        public List<Rule> nextRules() {
-            final List<Rule> nextRules = new ArrayList<>();
-            nextRules.add(this);
-            this.ruleFactory.newRule(index + 1).ifPresent(nextRules::add);
-            return nextRules;
-        }
-
-        @Override
-        public boolean isMatch(final char c) {
-            return true;
-        }
-    }
-
-    private final String pattern;
-
-    public RuleFactory(final String pattern) {
-        this.pattern = pattern;
-    }
-
-    public Rule firstRule() {
-        return newRule(0).orElseThrow(() -> new RuntimeException("Patten is empty"));
-    }
-
-    private Optional<Rule> newRule(final int index) {
-        if (index < 0 || index >= pattern.length()) return Optional.empty();
-        switch (pattern.charAt(index)) {
-            case '*': return Optional.of(new StarRule(this, index));
-            case '.': return Optional.of(new DotRule(this, index));
-            default: return Optional.of(new CharRule(this, index));
-        }
-    }
 }

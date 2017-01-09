@@ -13,6 +13,7 @@ public class P010RegexTest {
     @Test
     public void testCase() {
         test("aa","a", false);
+        test("abcd","*", false);
         test("aa","aa", true);
         test("aaa","aa", false);
         test("aa", "a*", true);
