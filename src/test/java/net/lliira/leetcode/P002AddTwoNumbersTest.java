@@ -2,6 +2,7 @@ package net.lliira.leetcode;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import static net.lliira.leetcode.TestHelper.*;
 
 import java.util.List;
 
@@ -17,24 +18,9 @@ public class P002AddTwoNumbersTest {
     }
 
     private void test(final int[] left, final int[] right, final int[] expected) {
-        final ListNode l = create(left), r = create(right);
-        ListNode e = create(expected);
+        final ListNode l = list(left), r = list(right);
+        ListNode e = list(expected);
         ListNode result = solution.addTwoNumbers(l, r);
-        while (result != null && e != null ) {
-            Assert.assertEquals(result.val, e.val);
-            result = result.next;
-            e = e.next;
-        }
-        Assert.assertTrue(result == null && e == null);
-    }
-
-    private ListNode create(final int[] digits) {
-        ListNode next = null;
-        for (int i = digits.length - 1; i >= 0; i--) {
-            final ListNode node = new ListNode(digits[i]);
-            node.next = next;
-            next = node;
-        }
-        return next;
+        assertEquals(result, e);
     }
 }

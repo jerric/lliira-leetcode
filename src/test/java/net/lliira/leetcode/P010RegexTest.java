@@ -12,6 +12,13 @@ public class P010RegexTest {
 
     @Test
     public void testCase() {
+        test("bbab","b*a*", false);
+        test("aaaaaaaaaaaaab","a*a*a*a*a*a*a*a*a*a*a*a*b", true);
+        test("","", true);
+        test("",".*", true);
+        test("bbbba",".*a*a", true);
+        test("a","ab*", true);
+        test("aaa","ab*ac*a", true);
         test("aa","a", false);
         test("abcd","*", false);
         test("aa","aa", true);
