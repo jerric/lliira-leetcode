@@ -12,7 +12,9 @@ public class P019RemoveNode {
             first = first.next;
             i++;
         }
-        if (first == null) return head; // N is out of range
+        if (first == null) {
+            return (i < n) ? head : head.next; // N is out of range, or points to head
+        }
 
         // advance first & second together till first reaches the end
         while (first.next != null) {
@@ -20,8 +22,7 @@ public class P019RemoveNode {
             second = second.next;
         }
 
-        if (second == head) return head.next;
-        prev.next = second.next;
+        if (second.next != null) second.next = second.next.next;
         return head;
     }
 }

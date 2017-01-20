@@ -12,7 +12,7 @@ public class P019RemoveNodeTest {
 
     @Test
     public void tests() {
-        test(list(1, 2, 3, 4, 5), 2, list(1, 2, 3, 5));
+        test(link(1, 2, 3, 4, 5), 2, link(1, 2, 3, 5));
     }
 
     private void test(final ListNode head, final int n, final ListNode expected) {

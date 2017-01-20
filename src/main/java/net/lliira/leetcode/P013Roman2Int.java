@@ -19,7 +19,6 @@ public class P013Roman2Int {
     }
 
     public int romanToInt(String s) {
-        s = s.toUpperCase();
         int sum = 0, pv = 0;
         for(int i = 0; i < s.length(); i++) {
             final int v = map.get(s.charAt(i));

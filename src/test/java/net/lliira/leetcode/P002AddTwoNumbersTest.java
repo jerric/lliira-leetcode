@@ -1,10 +1,7 @@
 package net.lliira.leetcode;
 
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import static net.lliira.leetcode.TestHelper.*;
-
-import java.util.List;
 
 /**
  * Created by Jerric on 12/28/2016.
@@ -18,8 +15,8 @@ public class P002AddTwoNumbersTest {
     }
 
     private void test(final int[] left, final int[] right, final int[] expected) {
-        final ListNode l = list(left), r = list(right);
-        ListNode e = list(expected);
+        final ListNode l = link(left), r = link(right);
+        ListNode e = link(expected);
         ListNode result = solution.addTwoNumbers(l, r);
         assertEquals(result, e);
     }

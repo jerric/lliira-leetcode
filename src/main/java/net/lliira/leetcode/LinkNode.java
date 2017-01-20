@@ -7,7 +7,8 @@ public class LinkNode<T> {
     T value;
     LinkNode<T> next;
 
-    public LinkNode(T value) {
+    public LinkNode(T value, final LinkNode<T> next) {
         this.value = value;
+        this.next = next;
     }
 }
