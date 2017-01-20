@@ -20,11 +20,20 @@ public class P025ReverseKGroup {
                 next.next = node;
                 start.next = top;
                 start = next;
+                top = null;
                 count = 0;
             }
         }
         if (count != 0) {  // reverse the remaining nodes
-            
+            node = top;
+            top = null;
+            while (node != null) {
+                ListNode next = node.next;
+                node.next = top;
+                top = node;
+                node = next;
+            }
+            start.next = top;
         }
         return holder.next;
     }

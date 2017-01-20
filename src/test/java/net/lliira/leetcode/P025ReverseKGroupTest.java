@@ -12,7 +12,7 @@ public class P025ReverseKGroupTest {
     @Test
     public void tests() {
         test(link(1, 2, 3, 4, 5), 2, link(2, 1, 4, 3, 5));
-        test(link(1, 2, 3, 4, 5), 3, link(3, 2, 1, 5, 4));
+        test(link(1, 2, 3, 4, 5), 3, link(3, 2, 1, 4, 5));
     }
 
     private void test(final ListNode list, final int k, final ListNode expected) {
