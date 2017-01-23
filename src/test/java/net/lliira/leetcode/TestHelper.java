@@ -39,4 +39,11 @@ public class TestHelper {
         }
         Assert.assertTrue(actual == null && expected == null);
     }
+
+    public static void assertEquals(int[] actual, int[] expected) {
+        Assert.assertEquals(actual.length, expected.length);
+        for (int i = 0; i < actual.length; i++) {
+            Assert.assertEquals(actual[i], expected[i]);
+        }
+    }
 }
