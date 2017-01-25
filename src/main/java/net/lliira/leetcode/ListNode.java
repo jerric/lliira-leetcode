@@ -10,4 +10,8 @@ public class ListNode {
     public ListNode(int x) {
         val = x;
     }
+    public ListNode(int x, final ListNode next) {
+        this(x);
+        this.next = next;
+    }
 }

@@ -31,6 +31,17 @@ public class TestHelper {
         return set;
     }
 
+    public static TreeNode tree(final int val) {
+        return new TreeNode(val);
+    }
+
+    public static TreeNode tree(final int val, final TreeNode left, final TreeNode right) {
+        final TreeNode node = new TreeNode(val);
+        node.left = left;
+        node.right = right;
+        return node;
+    }
+
     public static void assertEquals(ListNode actual, ListNode expected) {
         while (actual != null && expected != null ) {
             Assert.assertEquals(actual.val, expected.val);
@@ -44,6 +55,13 @@ public class TestHelper {
         Assert.assertEquals(actual.length, expected.length);
         for (int i = 0; i < actual.length; i++) {
             Assert.assertEquals(actual[i], expected[i]);
+        }
+    }
+
+    public static <T> void assertEquals(List<T> actual, List<T> expected) {
+        Assert.assertEquals(actual.size(), expected.size());
+        for (int i = 0; i < actual.size(); i++) {
+            Assert.assertEquals(actual.get(i), expected.get(i));
         }
     }
 }
