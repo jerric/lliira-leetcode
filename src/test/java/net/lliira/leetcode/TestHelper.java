@@ -64,4 +64,12 @@ public class TestHelper {
             Assert.assertEquals(actual.get(i), expected.get(i));
         }
     }
+
+    public static void assertEquals(TreeNode left, TreeNode right) {
+        if (left == null && right == null) return;
+        if (left == null || right == null) Assert.assertTrue(false);
+        Assert.assertEquals(left.val, right.val);
+        assertEquals(left.left, right.left);
+        assertEquals(left.right, right.right);
+    }
 }
