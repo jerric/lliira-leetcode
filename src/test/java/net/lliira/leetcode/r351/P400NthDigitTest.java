@@ -14,6 +14,8 @@ public class P400NthDigitTest {
 
     @Test
     public void tests() {
+        test(1000000000, 1);
+        test(13, 1);
         test(3, 3);
         test(11, 0);
     }

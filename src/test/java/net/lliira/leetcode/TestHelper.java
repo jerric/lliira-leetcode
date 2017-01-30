@@ -42,6 +42,18 @@ public class TestHelper {
         return node;
     }
 
+    public static TreeNode tree(final Integer... vals) {
+        final Deque<TreeNode> queue = new ArrayDeque<>();
+        final TreeNode root = new TreeNode(vals[0]);
+        queue.offer(root);
+        for (int i = 1; i < vals.length; i+= 2) {
+            final TreeNode parent = queue.poll();
+            if (vals[i] != null) queue.offer(parent.left = new TreeNode(vals[i]));
+            if (i < vals.length - 1 && vals[i + 1] != null) queue.offer(parent.right = new TreeNode(vals[i + 1]));
+        }
+        return root;
+    }
+
     public static void assertEquals(ListNode actual, ListNode expected) {
         while (actual != null && expected != null ) {
             Assert.assertEquals(actual.val, expected.val);
