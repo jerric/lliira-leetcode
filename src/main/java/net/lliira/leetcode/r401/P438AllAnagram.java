@@ -11,23 +11,18 @@ import java.util.Map;
 public class P438AllAnagram {
     public List<Integer> findAnagrams(String s, String p) {
         final List<Integer> locs = new LinkedList<>();
-        if (p == null || p.isEmpty() || s.length() < p.length()) return  locs;
-        final int[] pattern = new int[256];
-        final char[] ;
+        if (p == null || p.isEmpty() || s.length() < p.length()) return locs;
+        final int[] patterns = new int[26];
         for (int i = 0; i < p.length(); i++) {
-            final char c = p.charAt(i);
-            pattern[c] += 1;
-            if (pattern[c] == 1) cp++;
+            patterns[p.charAt(i) - 'a']++;
         }
-        final char[] pchars = new char[cp];
-        for ()
 
-        final int[] count = new int[256];
-        for (int i = 0; i <= s.length(); i++) {
-            final char c = s.charAt(i);
-            count[c] += 1;
-            if (i - p.length() >= 0) count[s.charAt(i - p.length())] -= 1;
-            if (count[c] != pattern[c]) continue;
+        int left = 0, right = 0, count = p.length();
+        while (right < s.length()) {
+            if (patterns[s.charAt(right++) - 'a']-- >= 1) count--;
+            if (count == 0) locs.add(left);
+            if (right - left == p.length() && patterns[s.charAt(left++) - 'a']++ >= 0) count++;
         }
+        return locs;
     }
 }
