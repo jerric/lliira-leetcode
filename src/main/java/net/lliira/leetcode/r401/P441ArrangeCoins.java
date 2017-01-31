@@ -6,11 +6,6 @@ package net.lliira.leetcode.r401;
 public class P441ArrangeCoins {
 
     public int arrangeCoins(int n) {
-        if (n < 2) return n;
-        int k = (int)Math.sqrt(n);
-        while ((k + 1) * k / 2 <= n) {
-            k++;
-        }
-        return k - 1;
+        return ((int)Math.sqrt(1 + 8L * n) - 1) / 2;
     }
 }

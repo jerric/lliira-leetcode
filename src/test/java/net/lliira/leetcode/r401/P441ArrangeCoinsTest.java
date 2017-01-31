@@ -12,6 +12,7 @@ public class P441ArrangeCoinsTest {
 
     @Test
     public void tests() {
+        test(1804289383, 60070);
         test(3, 2);
         test(5, 2);
         test(8, 3);
