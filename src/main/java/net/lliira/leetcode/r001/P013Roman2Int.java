@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Jerric on 1/16/2017.
+ Given a roman numeral, convert it to an integer.
+
+ Input is guaranteed to be within the range from 1 to 3999.
  */
 public class P013Roman2Int {
 

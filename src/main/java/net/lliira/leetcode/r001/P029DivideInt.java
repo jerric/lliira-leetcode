@@ -1,7 +1,9 @@
 package net.lliira.leetcode.r001;
 
 /**
- * Created by Jerric on 1/20/2017.
+ Divide two integers without using multiplication, division and mod operator.
+
+ If it is overflow, return MAX_INT.
  */
 public class P029DivideInt {
     public int divide(int dividend, int divisor) {

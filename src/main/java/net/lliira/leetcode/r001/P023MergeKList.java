@@ -5,7 +5,7 @@ import net.lliira.leetcode.ListNode;
 import java.util.PriorityQueue;
 
 /**
- * Created by Jerric on 1/19/2017.
+ Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
  */
 public class P023MergeKList {
     public ListNode mergeKLists(ListNode[] lists) {

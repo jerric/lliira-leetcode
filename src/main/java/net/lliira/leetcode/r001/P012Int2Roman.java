@@ -1,7 +1,9 @@
 package net.lliira.leetcode.r001;
 
 /**
- * Created by Jerric on 1/16/2017.
+ Given an integer, convert it to a roman numeral.
+
+ Input is guaranteed to be within the range from 1 to 3999.
  */
 public class P012Int2Roman {
     public String intToRoman(int num) {
