@@ -14,7 +14,7 @@ public class P031NextPermutationTest {
 
     @Test
     public void tests() {
-        test(new int[]{1,2,3}, new int[]{1,3,2});
+        test(new int[]{2,3,1}, new int[]{3,1,2});
         test(new int[]{3,2,1}, new int[]{1,2,3});
         test(new int[]{1,1,5}, new int[]{1,5,1});
     }
