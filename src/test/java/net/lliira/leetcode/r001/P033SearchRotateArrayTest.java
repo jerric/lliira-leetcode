@@ -14,6 +14,9 @@ public class P033SearchRotateArrayTest {
 
     @Test
     public void tests() {
+        test(new int[]{3, 1}, 1, 1);
+        test(new int[]{2, 3, 1}, 1, 2);
+        test(new int[]{1, 3}, 1, 0);
         test(new int[]{4, 5, 6, 7, 0, 1, 2, 3}, 7, 3);
         test(new int[]{4, 5, 6, 7, 0, 1, 2, 3}, -1, -1);
     }
