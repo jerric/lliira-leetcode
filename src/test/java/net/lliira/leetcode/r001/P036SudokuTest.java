@@ -3,6 +3,8 @@ package net.lliira.leetcode.r001;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static net.lliira.leetcode.TestHelper.*;
+
 /**
  */
 public class P036SudokuTest {
@@ -10,19 +12,11 @@ public class P036SudokuTest {
 
     @Test
     public void tests() {
-        test(toBoard(".87654321","2........","3........","4........","5........","6........","7........","8........","9........"), true);
+        test(sudoku(".87654321","2........","3........","4........","5........","6........","7........","8........","9........"), true);
     }
 
     private void test(final char[][] board, final boolean expected) {
         final boolean result = this.solution.isValidSudoku(board);
         Assert.assertEquals(result, expected);
-    }
-
-    private char[][] toBoard(final String... rows) {
-        final char[][] board = new char[rows.length][];
-        for (int i = 0; i < rows.length; i++) {
-            board[i] = rows[i].toCharArray();
-        }
-        return board;
     }
 }

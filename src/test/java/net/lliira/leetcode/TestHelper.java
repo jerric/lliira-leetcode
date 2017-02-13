@@ -84,4 +84,13 @@ public class TestHelper {
         assertEquals(left.left, right.left);
         assertEquals(left.right, right.right);
     }
+
+    public static char[][] sudoku(final String... rows) {
+        final char[][] board = new char[rows.length][];
+        for (int i = 0; i < rows.length; i++) {
+            board[i] = rows[i].toCharArray();
+        }
+        return board;
+    }
+
 }
