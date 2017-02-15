@@ -19,6 +19,10 @@ public class TestHelper {
         return next;
     }
 
+    public static Interval itv(final int a, final int b) {
+        return new Interval(a, b);
+    }
+
     public static <T> Set<T> set(final T... items) {
         final Set<T> set = new HashSet<T>(items.length);
         set.addAll(Arrays.asList(items));
