@@ -29,10 +29,14 @@ public class P056MergeInterval {
         Arrays.sort(ends);
         Interval interval = new Interval(starts[0], ends[0]);
         results.add(interval);
-        int s = 0, e = 0;
-        while (s < len && e < len) {
-            if (starts[s] < interval.end) s++;
-            else
+        for (i = 1; i < len; i++) {
+            final int start = starts[i];
+            if (start <= interval.end) interval.end = ends[i];
+            else {
+                interval = new Interval(start, ends[i]);
+                results.add(interval);
+            }
         }
+        return results;
     }
 }

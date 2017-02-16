@@ -17,6 +17,7 @@ public class P056MergeIntervalTest {
 
     @Test
     public void tests() {
+        test(list(itv(1,4),itv(4, 5)), list(itv(1,5)));
         test(list(itv(1,4),itv(2,3)), list(itv(1,4)));
         test(list(itv(1,3),itv(2,6),itv(8,10),itv(15,18)), list(itv(1,6),itv(8,10),itv(15,18)));
     }
