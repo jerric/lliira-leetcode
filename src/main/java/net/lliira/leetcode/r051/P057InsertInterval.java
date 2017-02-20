@@ -26,6 +26,9 @@ public class P057InsertInterval {
             if (itv.start < newInterval.start) left = mid + 1;
             else right = mid;
         }
+
+
+        return null;
     }
 
     private int search(final List<Interval> intervals, final int target, int from, int to) {
