@@ -1,5 +1,10 @@
 package net.lliira.leetcode.r501;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 /**
  There is a ball in a maze with empty spaces and walls. The ball can go through empty spaces by
  rolling up, down, left or right, but it won't stop rolling until hitting a wall. When the ball
@@ -58,6 +63,44 @@ package net.lliira.leetcode.r501;
  */
 public class P505Maze2 {
     public int shortestDistance(int[][] maze, int[] start, int[] destination) {
+        final int sx = start[1], sy = start[0], dx = destination[1], dy = destination[0];
+        final int height = maze.length, width = maze[0].length;
+        final Queue<int[]> queue = new PriorityQueue<>();
+        final boolean[][] checked = new boolean[height][width];
+        final int[][] distances = new int[height][width];
+        checked[start[0]][start[1]] = true;
+        queue.offer(start);
+        while (!queue.isEmpty()) {
+            final int[] cell = queue.poll();
+            final int x = cell[1], y = cell[0];
+            checked[y][x] = true;
+            final int d = distances[y][x];
 
+            int mx = x;
+            while (mx > 0 && maze[y][mx - 1] == 0) mx--;
+            if (mx != x) check(checked, distances, queue, mx, y, d + (x - mx), sx, sy);
+
+            mx = x;
+            while (mx < width - 1 && maze[y][mx + 1] == 0) mx++;
+            if (mx != x) check(checked, distances, queue, mx, y, d + (mx - x), sx, sy);
+
+            int my = y;
+            while (my > 0 && maze[my - 1][x] == 0) my--;
+            if (my != y) check(checked, distances, queue, x, my, d + (y - my), sx, sy);
+
+            my = y;
+            while (my < height - 1 && maze[my + 1][x] == 0) my++;
+            if (my != y) check(checked, distances, queue, x, my, d + (my - y), sx, sy);
+        }
+        final int d = distances[dy][dx];
+        return (d == 0) ? -1 : d;
     }
+
+    private void check(final boolean[][] checked, final int[][] distances, final Queue<int[]> queue,
+            final int x, final int y, final int distance, final int sx, final int sy) {
+        final int d = distances[y][x];
+        if ((d == 0 && (x != sx || y != sy)) || d > distance) distances[y][x] = distance;
+        if (!checked[y][x]) queue.offer(new int[]{y, x});
+    }
+
 }
