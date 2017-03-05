@@ -1,12 +1,14 @@
 package net.lliira.leetcode.r001;
 
-import net.lliira.leetcode.ListNode;
-
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
- You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of
- substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.
+ You are given a string, s, and a list of words, words, that are all of the same length. Find all
+ starting indices of substring(s) in s that is a concatenation of each word in words exactly once
+ and without any intervening characters.
 
  For example, given:
  s: "barfoothefoobarman"
@@ -17,50 +19,47 @@ import java.util.*;
  */
 public class P030StringWord {
     public List<Integer> findSubstring(String s, String[] words) {
-        return null;
-    }
+        final List<Integer> result = new LinkedList<>();
+        if (s == null || s.isEmpty() || words == null || words.length == 0) return result;
+        final int wlen = words[0].length(), limit = s.length() - wlen;
+        if (s.length() < words.length * wlen) return result;
 
-    private static class Matcher {
-        private final int start;
-        private final String[] words;
-        private final boolean[] matched;
-        private ListNode matching;
-        private final int wordLength;
+        // create a word->count map
+        final Map<String, Integer> baseMap = new HashMap<>(words.length);
+        for (final String word : words) baseMap.put(word, baseMap.getOrDefault(word, 0) + 1);
 
-        public Matcher(final int start, final String[] words) {
-            this.start = start;
-            this.words = words;
-            this.wordLength = words[0].length();
-            this.matched = new boolean[words.length];
-            this.matching = new ListNode(-1);
-        }
-
-        public boolean hasMatch(final char c, final int i) {
-            int diff = (i - this.start) % this.wordLength;
-            if (diff == 0) {
-                ListNode node = this.matching.next;
-                while (node != null) {
-                    this.matched[node.val] = true;
-                    node = node.next;
-                }
-                node = this.matching;
-                for (int j = 0; j < this.matched.length; j++) {
-                    if (!this.matched[i]) {
-                        node.next = new ListNode(i);
-                        node = node.next;
+        for (int i = 0; i < wlen; i++) {
+            int count = 0, ups = words.length, downs = 0;
+            final Map<String, Integer> map = new HashMap<>(baseMap);
+            for (int j = i; j <= limit; j += wlen) {
+                // when we have reached the max length, remove the previous word from the current window
+                if (count == words.length) {
+                    count--;
+                    final int prevPos = j - (words.length) * wlen;
+                    final String prevWord = s.substring(prevPos, prevPos + wlen);
+                    if (map.containsKey(prevWord)) {
+                        final int c = map.get(prevWord) + 1;
+                        map.put(prevWord, c);
+                        if (c > 0) ups++;
+                        else downs--;
                     }
                 }
-            }
-            ListNode node = this.matching.next, prev = this.matching;
-            while (node != null) {
-                final String word = this.words[node.val];
-                if (word.charAt(diff) != c) {
-                    prev.next = node.next;
-                    prev = node;
-                    node = node.next;
+
+                // subtract the current word from the sum if it
+                final String word = s.substring(j, j + wlen);
+                count++;
+                // if the word doesn't match anything, do nothing; if the word matches, but the per
+                // word count is not 1, either we have more or less words
+                if (map.containsKey(word)) {
+                    final int c = map.get(word) - 1;
+                    map.put(word, c);
+                    if (c < 0) downs++;
+                    else ups--;
+
+                    if (count == words.length && ups == 0 && downs == 0) result.add(j - (words.length - 1) * wlen);
                 }
             }
-            return (this.matching.next != null);
         }
+        return result;
     }
 }

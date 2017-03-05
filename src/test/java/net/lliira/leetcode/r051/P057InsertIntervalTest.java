@@ -17,6 +17,9 @@ public class P057InsertIntervalTest {
 
     @Test
     public void tests() {
+        test(list(itv(1,5)), itv(2, 3), list(itv(1,5)));
+        test(list(itv(1,3),itv(6, 9)), itv(4, 5), list(itv(1,3), itv(4,5), itv(6, 9)));
+        test(list(itv(1,3),itv(6, 9)), itv(2, 5), list(itv(1,5), itv(6, 9)));
         test(list(itv(1,3),itv(6, 9)), itv(2, 5), list(itv(1,5), itv(6, 9)));
         test(list(itv(1,2),itv(3,5),itv(6,7),itv(8,10),itv(12,16)), itv(4,9), list(itv(1,2),itv(3,10),itv(12,16)));
     }

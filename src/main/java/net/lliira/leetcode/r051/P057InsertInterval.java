@@ -2,6 +2,8 @@ package net.lliira.leetcode.r051;
 
 import net.lliira.leetcode.Interval;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -19,25 +21,29 @@ import java.util.List;
  */
 public class P057InsertInterval {
     public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
-        int left =0, right = intervals.size() - 1;
-        while (left <= right) {
-            final int mid = left + (right - left) / 2;
-            final Interval itv = intervals.get(mid);
-            if (itv.start < newInterval.start) left = mid + 1;
-            else right = mid;
+        final List<Interval> result = new LinkedList<>();
+        if (intervals.isEmpty()) result.add(newInterval);
+        else if (intervals.get(0).start > newInterval.end) {
+            result.add(newInterval);
+            result.addAll(intervals);
+        } else if (intervals.get(intervals.size() - 1).end < newInterval.start) {
+            result.addAll(intervals);
+            result.add(newInterval);
+        } else {
+            int i = 0;
+            Interval interval;
+            while (i < intervals.size() && (interval = intervals.get(i)).end < newInterval.start) {
+                result.add(interval);
+                i++;
+            }
+            while (i < intervals.size() && (interval = intervals.get(i)).start <= newInterval.end) {
+                if (newInterval.start > interval.start) newInterval.start = interval.start;
+                if (newInterval.end < interval.end) newInterval.end = interval.end;
+                i++;
+            }
+            result.add(newInterval);
+            while (i < intervals.size()) result.add(intervals.get(i++));
         }
-
-
-        return null;
-    }
-
-    private int search(final List<Interval> intervals, final int target, int from, int to) {
-        while (from <= to) {
-            final int mid = (from + to) / 2;
-            final Interval interval = intervals.get(mid);
-            if (interval.start <= target) to = mid;
-            else from = mid + 1;
-        }
-        return  from;
+        return result;
     }
 }
